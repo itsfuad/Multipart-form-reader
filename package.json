@@ -1,0 +1,31 @@
+{
+  "name": "multipart-form-parser",
+  "version": "1.0.3",
+  "description": "Multipart form parser",
+  "main": "formParser.js",
+  "type": "module",
+  "devDependencies": {
+    "@types/node": "^20.6.0",
+    "express": "^4.18.2"
+  },
+  "scripts": {
+    "test": "npm run test/test.js",
+    "dev": "nodemon test/test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+hhttps://github.com/itsfuad/Multipart-form-parser.git"
+  },
+  "keywords": [
+    "formparser",
+    "multer",
+    "nodejs"
+  ],
+  "author": "Fuad Hasan",
+  "license": "MIT",
+  "types": "formParser.d.ts",
+  "bugs": {
+    "url": "https://github.com/itsfuad/Multipart-form-parser/issues"
+  },
+  "homepage": "https://github.com/itsfuad/Multipart-form-parser#readme"
+}

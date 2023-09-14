@@ -1,0 +1,12 @@
+{
+    "compilerOptions": {
+        "target": "es5",
+        "module": "NodeNext",
+        "outDir": "./",
+        "strict": true,
+        "declaration": true,
+        "esModuleInterop": true,
+        "moduleResolution": "NodeNext",
+        "forceConsistentCasingInFileNames": true
+    }
+}
