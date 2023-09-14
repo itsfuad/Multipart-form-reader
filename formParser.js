@@ -18,10 +18,10 @@ export function formParser(req, res, next) {
         res.end('Content type header does not contain boundary');
         return;
     }
-    console.log('boundary', boundary);
+    //console.log('boundary', boundary);
     const contentLength = req.headers['content-length'];
     const fileSize = parseInt(contentLength, 10);
-    console.log('fileSize', fileSize);
+    //console.log('fileSize', fileSize);
     if (fileSize > maxFileSize) {
         res.writeHead(413, { Connection: 'close' });
         res.end('File is too big');
