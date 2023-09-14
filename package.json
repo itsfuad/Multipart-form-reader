@@ -8,9 +8,6 @@
     "@types/node": "^20.6.0",
     "express": "^4.18.2"
   },
-  "publishConfig": {
-    "registry": "https://npm.pkg.github.com/itsfuad"
-  },
   "scripts": {
     "test": "npm run test/test.js",
     "dev": "nodemon test/test.js"
