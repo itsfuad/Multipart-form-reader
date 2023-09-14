@@ -6,32 +6,32 @@ var ParsingState;
     ParsingState[ParsingState["READING_PART_SEPARATOR"] = 3] = "READING_PART_SEPARATOR";
 })(ParsingState || (ParsingState = {}));
 //make a middleware that parses the form data and adds it to the request object
-var maxFileSize = 1000000;
+let maxFileSize = 1000000;
 export function setMaxFileSize(size) {
     maxFileSize = size;
 }
 export function formParser(req, res, next) {
-    var header = req.headers['content-type'];
-    var boundary = getBoundary(header);
+    const header = req.headers['content-type'];
+    const boundary = getBoundary(header);
     if (!boundary) {
         res.statusCode = 400;
         res.end('Content type header does not contain boundary');
         return;
     }
     console.log('boundary', boundary);
-    var contentLength = req.headers['content-length'];
-    var fileSize = parseInt(contentLength, 10);
+    const contentLength = req.headers['content-length'];
+    const fileSize = parseInt(contentLength, 10);
     console.log('fileSize', fileSize);
     if (fileSize > maxFileSize) {
         res.writeHead(413, { Connection: 'close' });
         res.end('File is too big');
         return;
     }
-    var body = [];
-    req.on('data', function (chunk) {
+    const body = [];
+    req.on('data', (chunk) => {
         body.push(chunk);
     });
-    req.on('error', function (err) {
+    req.on('error', (err) => {
         console.error(err);
         if (body.length > 0) {
             body.length = 0;
@@ -40,7 +40,7 @@ export function formParser(req, res, next) {
         res.end('Something went wrong');
         return;
     });
-    req.on('aborted', function () {
+    req.on('aborted', () => {
         if (body.length > 0) {
             body.length = 0;
         }
@@ -49,24 +49,22 @@ export function formParser(req, res, next) {
         res.end();
         return;
     });
-    req.on('end', function () {
-        var bodyBuffer = Buffer.concat(body);
-        var formData = parse(bodyBuffer, boundary);
+    req.on('end', () => {
+        const bodyBuffer = Buffer.concat(body);
+        const formData = parse(bodyBuffer, boundary);
         if (!formData) {
             res.writeHead(400, { Connection: 'close' });
             res.end('Invalid form data');
             return;
         }
-        //add fields to the req.body object and files to the req.files array
-        req.files = [];
-        req.body = {};
-        for (var _i = 0, formData_1 = formData; _i < formData_1.length; _i++) {
-            var input = formData_1[_i];
+        //add fields to the req.body.fields object and files to the req.body.files array
+        req.body = { fields: {}, files: [] };
+        for (const input of formData) {
             if (input.filename) {
-                req.files.push(input);
+                req.body.files.push(input);
             }
             else {
-                req.body = input;
+                req.body.fields[input.name] = input.data.toString();
             }
         }
         next();
@@ -80,18 +78,18 @@ export function formParser(req, res, next) {
  * @returns {Input[]} An array of extracted parts.
  */
 function parse(multipartBodyBuffer, boundary) {
-    var lastline = '';
-    var contentDispositionHeader = '';
-    var contentTypeHeader = '';
-    var state = ParsingState.INIT;
-    var buffer = [];
-    var allParts = [];
-    var currentPartHeaders = [];
-    for (var i = 0; i < multipartBodyBuffer.length; i++) {
-        var oneByte = multipartBodyBuffer[i];
-        var prevByte = i > 0 ? multipartBodyBuffer[i - 1] : null;
-        var newLineDetected = oneByte === 0x0a && prevByte === 0x0d;
-        var newLineChar = oneByte === 0x0a || oneByte === 0x0d;
+    let lastline = '';
+    let contentDispositionHeader = '';
+    let contentTypeHeader = '';
+    let state = ParsingState.INIT;
+    let buffer = [];
+    const allParts = [];
+    let currentPartHeaders = [];
+    for (let i = 0; i < multipartBodyBuffer.length; i++) {
+        const oneByte = multipartBodyBuffer[i];
+        const prevByte = i > 0 ? multipartBodyBuffer[i - 1] : null;
+        const newLineDetected = oneByte === 0x0a && prevByte === 0x0d;
+        const newLineChar = oneByte === 0x0a || oneByte === 0x0d;
         if (!newLineChar)
             lastline += String.fromCharCode(oneByte);
         if (state === ParsingState.INIT && newLineDetected) {
@@ -108,8 +106,7 @@ function parse(multipartBodyBuffer, boundary) {
             }
             else {
                 // found empty line, search for the headers we want and set the values
-                for (var _i = 0, currentPartHeaders_1 = currentPartHeaders; _i < currentPartHeaders_1.length; _i++) {
-                    var h = currentPartHeaders_1[_i];
+                for (const h of currentPartHeaders) {
                     if (h.toLowerCase().startsWith('content-disposition:')) {
                         contentDispositionHeader = h;
                     }
@@ -128,9 +125,9 @@ function parse(multipartBodyBuffer, boundary) {
                 lastline = ''; // memory save
             }
             if ('--' + boundary === lastline) {
-                var j = buffer.length - lastline.length;
-                var part = buffer.slice(0, j - 1);
-                allParts.push(processPart({ contentDispositionHeader: contentDispositionHeader, contentTypeHeader: contentTypeHeader, part: part }));
+                const j = buffer.length - lastline.length;
+                const part = buffer.slice(0, j - 1);
+                allParts.push(processPart({ contentDispositionHeader, contentTypeHeader, part }));
                 buffer = [];
                 currentPartHeaders = [];
                 lastline = '';
@@ -163,12 +160,12 @@ function getBoundary(header) {
     if (!header) {
         return '';
     }
-    var items = header.split(';');
+    const items = header.split(';');
     if (items) {
-        for (var i = 0; i < items.length; i++) {
-            var item = items[i].trim();
+        for (let i = 0; i < items.length; i++) {
+            const item = items[i].trim();
             if (item.indexOf('boundary') >= 0) {
-                var k = item.split('=');
+                const k = item.split('=');
                 return k[1].trim().replace(/^["']|["']$/g, '');
             }
         }
@@ -182,11 +179,11 @@ function getBoundary(header) {
  * @returns {Input} Processed input.
  */
 function processPart(part) {
-    var obj = function (str) {
-        var k = str.split('=');
-        var a = k[0].trim();
-        var b = JSON.parse(k[1].trim());
-        var o = {};
+    const obj = function (str) {
+        const k = str.split('=');
+        const a = k[0].trim();
+        const b = JSON.parse(k[1].trim());
+        const o = {};
         Object.defineProperty(o, a, {
             value: b,
             writable: true,
@@ -195,12 +192,12 @@ function processPart(part) {
         });
         return o;
     };
-    var header = part.contentDispositionHeader.split(';');
-    var filenameData = header[2];
-    var input = {};
+    const header = part.contentDispositionHeader.split(';');
+    const filenameData = header[2];
+    let input = {};
     if (filenameData) {
         input = obj(filenameData);
-        var contentType = part.contentTypeHeader.split(':')[1].trim();
+        const contentType = part.contentTypeHeader.split(':')[1].trim();
         Object.defineProperty(input, 'type', {
             value: contentType,
             writable: true,
@@ -222,3 +219,4 @@ function processPart(part) {
     });
     return input;
 }
+//# sourceMappingURL=formParser.js.map

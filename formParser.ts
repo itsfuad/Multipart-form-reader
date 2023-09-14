@@ -21,8 +21,10 @@ enum ParsingState {
 }
 
 interface Request extends http.IncomingMessage {
-  files?: Input[];
-  body?: any;
+  body?: {
+    fields: { [key: string]: string };
+    files: Input[];
+  }
 }
 
 //make a middleware that parses the form data and adds it to the request object
@@ -90,14 +92,13 @@ export function formParser(req: Request, res: http.ServerResponse, next: () => v
       return;
     }
 
-    //add fields to the req.body object and files to the req.files array
-    req.files = [];
-    req.body = {};
+    //add fields to the req.body.fields object and files to the req.body.files array
+    req.body = { fields: {}, files: [] };
     for (const input of formData) {
       if (input.filename) {
-        req.files.push(input);
+        req.body.files.push(input);
       } else {
-        req.body = input;
+        req.body.fields[input.name as string] = input.data.toString();
       }
     }
 

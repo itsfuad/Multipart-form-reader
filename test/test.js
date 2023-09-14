@@ -1,4 +1,4 @@
-import { formParser, setMaxFileSize } from './../dist/formParser.js';
+import { formParser, setMaxFileSize } from './../formParser.js';
 import express from 'express';
 import fs from 'fs';
 
@@ -16,20 +16,20 @@ app.get('/', (req, res) => {
 
 router.post('/', formParser, (req, res) => {
     console.log('File upload request received');
-    //console.log('req.files', req.files);
-    //console.log('req.body', req.body);
+
+    console.log('req.body', req.body);
     //write the file to disk
     //create upload directory if it doesn't exist
     if (!fs.existsSync('./uploads')) {
         fs.mkdirSync('./uploads');
     }
     //write the file to disk
-    fs.writeFileSync('./uploads/' + req.files[0].filename, req.files[0].data);
+    fs.writeFileSync('./uploads/' + req.body.files[0].filename, req.body.files[0].data);
     res.send('File uploaded');
 });
 
 app.use('/test', router);
 
-app.listen(3000, () => {
-    console.log('Example app listening on port 3000!');
+app.listen(3001, () => {
+    console.log('Example app listening on port 3001!');
 });
