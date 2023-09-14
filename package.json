@@ -1,6 +1,6 @@
 {
   "name": "pika-form-parser",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Multipart form parser",
   "type": "module",
   "main": "formParser.js",
