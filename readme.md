@@ -21,7 +21,7 @@ npm install multipart-form-parser
 
 ## Usage
 
-```js```
+```js
 import { formParser, setMaxFileSize } from 'multipart-body-parser';
 import express from 'express';
 import fs from 'fs';
