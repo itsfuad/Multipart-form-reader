@@ -43,13 +43,13 @@ export function formParser(req: Request, res: http.ServerResponse, next: () => v
     return;
   }
 
-  console.log('boundary', boundary);
+  //console.log('boundary', boundary);
 
   const contentLength = req.headers['content-length'] as string;
 
   const fileSize = parseInt(contentLength, 10);
 
-  console.log('fileSize', fileSize);
+  //console.log('fileSize', fileSize);
 
   if (fileSize > maxFileSize) {
     res.writeHead(413, { Connection: 'close' });
