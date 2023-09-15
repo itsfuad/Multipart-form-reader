@@ -22,7 +22,7 @@ npm install multipart-form-reader
 ## Usage
 
 ```js
-import { formParser, setMaxFileSize } from 'multipart-form-reader';
+import { readForm, setMaxFileSize } from 'multipart-form-reader';
 import express from 'express';
 import fs from 'fs';
 
@@ -38,7 +38,7 @@ app.get('/', (req, res) => {
     res.send('Hello World!');
 });
 
-router.post('/', formParser, (req, res) => {
+router.post('/', readForm, (req, res) => {
     console.log('File upload request received');
     //console.log('req.files', req.files);
     //console.log('req.body', req.body);

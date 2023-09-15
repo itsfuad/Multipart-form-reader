@@ -10,7 +10,7 @@ let maxFileSize = 1000000;
 export function setMaxFileSize(size) {
     maxFileSize = size;
 }
-export function formParser(req, res, next) {
+export function readForm(req, res, next) {
     const header = req.headers['content-type'];
     const boundary = getBoundary(header);
     if (!boundary) {

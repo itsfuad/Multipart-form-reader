@@ -16,5 +16,5 @@ interface Request extends http.IncomingMessage {
     };
 }
 export declare function setMaxFileSize(size: number): void;
-export declare function formParser(req: Request, res: http.ServerResponse, next: () => void): void;
+export declare function readForm(req: Request, res: http.ServerResponse, next: () => void): void;
 export {};

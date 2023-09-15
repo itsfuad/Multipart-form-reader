@@ -1,4 +1,4 @@
-import { formParser, setMaxFileSize } from './../formParser.js';
+import { readForm, setMaxFileSize } from './../formParser.js';
 import express from 'express';
 import fs from 'fs';
 
@@ -14,7 +14,7 @@ app.get('/', (req, res) => {
     res.send('Hello World!');
 });
 
-router.post('/', formParser, (req, res) => {
+router.post('/', readForm, (req, res) => {
     console.log('File upload request received');
 
     console.log('req.body', req.body);

@@ -1,7 +1,7 @@
 {
-  "name": "@pikapi/multipart-form-parser",
+  "name": "multipart-form-reader",
   "version": "1.0.0",
-  "description": "Multipart form parser",
+  "description": "Multipart form reader",
   "type": "module",
   "main": "formParser.js",
   "private": false,
@@ -15,7 +15,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/itsfuad/formParser.git"
+    "url": "git+https://github.com/itsfuad/Multipart-form-reader.git"
   },
   "keywords": [
     "formparser",
@@ -26,7 +26,7 @@
   "license": "MIT",
   "types": "formParser.d.ts",
   "bugs": {
-    "url": "https://github.com/itsfuad/formParser/issues"
+    "url": "https://github.com/itsfuad/Multipart-form-reader/issues"
   },
-  "homepage": "https://github.com/itsfuad/formParser#readme"
+  "homepage": "https://github.com/itsfuad/Multipart-form-reader#readme"
 }

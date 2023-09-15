@@ -34,7 +34,7 @@ export function setMaxFileSize(size: number) {
   maxFileSize = size;
 }
 
-export function formParser(req: Request, res: http.ServerResponse, next: () => void) {
+export function readForm(req: Request, res: http.ServerResponse, next: () => void) {
   const header = req.headers['content-type'];
   const boundary = getBoundary(header);
   if (!boundary) {
