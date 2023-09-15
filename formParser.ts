@@ -87,7 +87,7 @@ export function readForm(req: Request, res: http.ServerResponse, next: () => voi
 
     const formData = parse(bodyBuffer, boundary);
   
-    if (!formData) {
+    if (formData.length < 1) {
       res.writeHead(400, { Connection: 'close' });
       res.end('Invalid form data');
       return;
@@ -197,7 +197,7 @@ function getBoundary(header: string | undefined): string {
     return '';
   }
   const items = header.split(';');
-  if (items) {
+  if (items.length > 1) {
     for (let i = 0; i < items.length; i++) {
       const item = items[i].trim();
       if (item.indexOf('boundary') >= 0) {
