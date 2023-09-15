@@ -1,4 +1,4 @@
-# pika-form-parser
+# Multipart form parser
 
 This is a TypeScript module that provides functions to parse a multipart body buffer and extract its parts based on the provided boundary. It also includes utility functions to extract the boundary string from the Content-Type header and generate sample demo data for testing.
 
@@ -16,13 +16,13 @@ This is a TypeScript module that provides functions to parse a multipart body bu
 This module is written in TypeScript and can be added to your project using npm:
 
 ```bash
-npm install pika-form-parser
+npm install multipart-form-reader
 ```
 
 ## Usage
 
 ```js
-import { formParser, setMaxFileSize } from 'pika-form-parser';
+import { formParser, setMaxFileSize } from 'multipart-form-reader';
 import express from 'express';
 import fs from 'fs';
 
