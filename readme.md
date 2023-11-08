@@ -24,6 +24,7 @@ npm install multipart-form-reader
 ## Usage
 
 ```js
+//import
 import { readForm, setMaxFileSize } from 'multipart-form-reader';
 import express from 'express';
 import fs from 'fs';
