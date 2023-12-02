@@ -24,7 +24,6 @@ npm install multipart-form-reader
 ## Usage
 
 ```js
-//import
 import { readForm, setMaxFileSize } from 'multipart-form-reader';
 import express from 'express';
 import fs from 'fs';
@@ -60,5 +59,4 @@ app.use('/test', router);
 app.listen(3000, () => {
     console.log('Example app listening on port 3000!');
 });
-
 ```
