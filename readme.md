@@ -36,7 +36,7 @@ const SIZE = 10 * 1024 * 1024;
 setMaxFileSize(SIZE);
 
 app.get('/', (req, res) => {
-    res.send('Hello World!');
+    res.send('Hi mom!');
 });
 
 router.post('/', readForm, (req, res) => {
