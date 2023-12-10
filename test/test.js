@@ -5,9 +5,6 @@ import fs from 'fs';
 const app = express();
 const router = express.Router();
 
-//10MB
-const SIZE = 10 * 1024 * 1024;
-
 setMaxFileSize(SIZE);
 
 app.get('/', (req, res) => {
