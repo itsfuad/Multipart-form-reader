@@ -5,6 +5,7 @@
   "type": "module",
   "main": "formParser.js",
   "private": false,
+  "$schema": "https://schemastore.org/package",
   "engines": {
     "node": ">=16.13.0",
     "pnpm": ">=3",
