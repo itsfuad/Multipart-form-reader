@@ -7,15 +7,32 @@ on:
 jobs:
   publish-gpr:
     runs-on: ubuntu-latest
-    steps :
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v1
+
+    steps:
+      - uses: actions/checkout@v4
+
+      # Set Git user name and email
+      - name: Set Git user name and email
+        run: |
+          git config --global user.email "fuad.cs22@gmail.com"
+          git config --global user.name "itsfuad"
+
+      - uses: actions/setup-node@v4
         with:
           node-version: 20
           registry-url: https://npm.pkg.github.com/
           scope: '@itsfuad'
+
       - run: npm install
       - run: npx tsc
+
+      # Run npm version to auto-increment the version number
+      - name: Auto-increment version number
+        run: npm version patch --force
+        env:
+          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
+
+      # Publish the package with the updated version number
       - run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
