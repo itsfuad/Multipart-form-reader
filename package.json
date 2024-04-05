@@ -1,10 +1,13 @@
 {
-  "name": "multipart-form-reader",
+  "name": "@itsfuad/multipart-form-reader",
   "version": "1.0.0",
   "description": "Multipart form reader",
   "type": "module",
   "main": "formParser.js",
   "private": false,
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/@itsfuad"
+  },
   "schema": "https://schemastore.org/package",
   "engines": {
     "node": ">=16.13.0",
@@ -12,6 +15,7 @@
     "npm": ">=8"
   },
   "devDependencies": {
+    "typescript": "^4.5.4",
     "@types/node": "^20.6.0",
     "express": "^4.18.2"
   },
