@@ -114,7 +114,7 @@ export function readForm(req: Request, res: http.ServerResponse, next: () => voi
  * @param {string} boundary - The boundary string.
  * @returns {Input[]} An array of extracted parts.
  */
-function parse(multipartBodyBuffer: Buffer, boundary: string): Input[] {
+export function parse(multipartBodyBuffer: Buffer, boundary: string): Input[] {
   let lastline = '';
   let contentDispositionHeader = '';
   let contentTypeHeader = '';
@@ -192,7 +192,7 @@ function parse(multipartBodyBuffer: Buffer, boundary: string): Input[] {
  * @param {string} header - The Content-Type header.
  * @returns {string} The extracted boundary string.
  */
-function getBoundary(header: string | undefined): string {
+export function getBoundary(header: string | undefined): string {
   if (!header) {
     return '';
   }
