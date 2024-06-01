@@ -202,7 +202,7 @@ export function getBoundary(header: string | undefined): string {
       const item = items[i].trim();
       if (item.indexOf('boundary') >= 0) {
         const k = item.split('=');
-        return new String(k[1]).trim().replace(/(^["'])|(["']$)/g, '')
+        return k[1].trim().replace(/(^["'])|(["']$)/g, '');
       }
     }
   }
